@@ -1,0 +1,122 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Car {
+    string company;
+    string model;
+    string color;
+    string max_speed;
+    int price_per_km;
+};
+
+struct LeaseInfo {
+    string Name;
+    int age;
+    int num_passengers;
+    string Natio_ID;
+    int payment_acc;
+    int kilometers;
+    int total_price;
+};
+
+Car cars[9];
+LeaseInfo lease[100];
+
+void Menu() {
+    int num = 1;
+    for (int i = 0; i < 9; ++i) {
+        cout << "\t\t\t";
+        cout << "Enter " << num << "\t- To Select " << cars[i].company << endl;
+        num++;
+    }
+}
+
+void Details(int Choice) {
+    system("CLS");
+
+    cout << "\n\n\n\t\t\t--------------------------\n";
+    cout << "\t\t\tYou Have Selected " << cars[Choice - 1].company << endl;
+    cout << "\t\t\t---------------------------\n\n\n";
+
+    cout << "\t\t\tModel: " << cars[Choice - 1].model << endl;
+    cout << "\t\t\tColor: " << cars[Choice - 1].color << endl;
+    cout << "\t\t\tMaximum Speed: " << cars[Choice - 1].max_speed << endl;
+    cout << "\t\t\tPrice Per Kilometer: " << cars[Choice - 1].price_per_km << endl;
+}
+
+void user_input(int theChoice) {
+    int j = theChoice - 1;
+
+    cout << "\t\t\t-------------------------------------------\n";
+    cout << "\t\t\tPlease Provide Your Personal Details: \n";
+    cout << "\t\t\t-------------------------------------------\n\n";
+
+    cout << "\t\t\tEnter Your Name: ";
+    cin >> lease[j].Name;
+
+    cout << "\t\t\tEnter Your Age: ";
+    cin >> lease[j].age;
+
+    cout << "\t\t\tEnter the Number of Passengers: ";
+    cin >> lease[j].num_passengers;
+
+    cout << "\t\t\tEnter Your National ID: ";
+    cin >> lease[j].Natio_ID;
+
+    cout << "\t\t\tEnter Kilometers Traveled: ";
+    cin >> lease[j].kilometers;
+
+    // Calculate the total price based on kilometers traveled
+    int price_per_km = cars[theChoice - 1].price_per_km;
+    lease[j].total_price = price_per_km * lease[j].kilometers;
+
+    cout << "\t\t\tPayment Amount: " << lease[j].total_price << endl;
+
+    cout << "\n\n\t\t\tDo you want to continue? (yes/no) ";
+    string decide;
+    cin >> decide;
+    if (decide == "no") return;
+    system("CLS");
+}
+
+int main() {
+    // Initialize car data
+    cars[0] = {"Maruti Suzuki", "800", "Yellow", "80 km/h", 10};
+    cars[1] = {"Volkswagen", "2020", "Black", "200 Km/h", 12};
+    cars[2] = {"BMW", "Q7", "Red", "300 Km/h", 15};
+    cars[3] = {"Audi", "Ra", "Brown", "250 Km/h", 18};
+    cars[4] = {"KIA", "Saltos", "Blue", "320 km/h", 20};
+    cars[5] = {"Tesla", "S-Series", "Silver", "400 Km/h", 22};
+    cars[6] = {"Mercedes", "Benz", "Black", "200 Km/h", 10};
+    cars[7] = {"Mahindra", "Thar", "Grey", "250 km/h", 12};
+    cars[8] = {"TATA", "Nano", "Red", "200 km/h", 10};
+
+    string decide = "yes";
+
+    cout << "\t\t\t--------------------------------\n";
+    cout << "\t\t\t\tSIMPLE CAR RENTAL SYSTEM \n";
+    cout << "\t\t\tWelcome to Our Company, choose from the menu: " << endl;
+    cout << "\t\t\t--------------------------------\n";
+    while (decide != "exit") {
+        Menu();
+        cout << "\n\n\n\t\t\tYour Choice: ";
+        int theChoice;
+        cin >> theChoice;
+        Details(theChoice);
+
+        cout << "\n\n\n\t\t\tAre You Sure, you want to rent this Car? (yes/no/exit): ";
+        cin >> decide;
+        if (decide == "yes") {
+            user_input(theChoice);
+        } else if (decide == "no") {
+            system("CLS");
+            continue;
+        } else if (decide == "exit") {
+            system("CLS");
+            break;
+        }
+    }
+
+    return 0;
+}
